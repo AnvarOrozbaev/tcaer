@@ -96,11 +96,11 @@ max-width: 1000px;
   .menu__link:hover{
     color:#0098FF
   }
-ul{
+.menu__list{
   list-style: none;
   display: flex;  
   
 }
-li{
+.menu__list-item{
   margin-right: 50px;
 }

@@ -6,9 +6,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
-import  { useState, useEffect} from "react";
+import  {  useCallback} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AddChat } from './AddChat';
+import {  deleteChat } from "../../store/chats/actions";
+import {ChatItem} from './ChatItem'
 //import { addChat } from "../../store/Chats/actions";
 // import InboxIcon from '@material-ui/icons/Inbox';
 // import DraftsIcon from '@material-ui/icons/Drafts';
@@ -42,45 +44,26 @@ input:{
 }
 }));
 
-export  function ChatList() {
+export  function ChatList({chats, onDeleteChat}) {
+
     
   const classes = useStyles();
   const dispatch = useDispatch();
- const chats = useSelector(state => state.chats);
-
- 
- 
-
- 
-
+//  const chats = useSelector(state => state.chats);
+//
   return (
     <div className={classes.root}>
       <List component="nav" 
       aria-label="main mailbox folders"
       > 
       { Object.values(chats).map((item) => (
-    <ListItem
-      button
-      key={item.id}
-      divider={true}
-     
-       >
-      <Link to={`/home/${item.id}`}
-       className = "chat__link"
-       >
-      <ListItemText primary={item.name} />
-      </Link> 
-      <Button
-        variant="contained"
-        color="primary"
-        startIcon={<DeleteIcon />}
-        className={classes.button}
-        onClick={()=> {delete chats[item.id]; } }
-      >
-      </Button>
-      
-    </ListItem>
-   
+    <ChatItem
+    name={item.name}
+    key={item.id}
+    id={item.id}
+    onDelete={onDeleteChat}
+    classes={classes.button}
+  />
   ))}
   <AddChat/>
 </List>

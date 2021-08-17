@@ -7,7 +7,7 @@ import { ChatList } from "../ChatList";
 import { useParams} from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux';
 
-import { sendMessageWithReply, sendMessage } from "../../store/chats/actions";
+import { sendMessageWithReply, sendMessage, deleteChat } from "../../store/chats/actions";
 import { selectName } from "../../store/chats/selectors";
 import {
     ThemeProvider,
@@ -45,20 +45,22 @@ function Home() {
     [chatId]
   );
 
-    
+  const handleDeleteChat = useCallback((id) => {
+    dispatch(deleteChat(id));
+  }, []);
 
      
 
   if(chatId === undefined)
 {  return  ( 
   <> 
-  <ChatList chats={chats} />  
+  <ChatList chats={chats} onDeleteChat={handleDeleteChat} />  
   </>);}
   if (!chatId || !chats[chatId] ) {
   
     return  ( 
     <> 
-    <ChatList chats={chats} />
+    <ChatList chats={chats}  onDeleteChat={handleDeleteChat} />
     <h3> Такого чата не существует.Выбери чат </h3>
     </>);
 
@@ -68,7 +70,7 @@ function Home() {
 
   return (<ThemeProvider theme={theme}>
     <div className="root">
-      <ChatList  />
+    <ChatList chats={chats} onDeleteChat={handleDeleteChat} />
       {!!chatId && (
         <div className = "container">
             <MessageList messages={chats[chatId].messages } />
