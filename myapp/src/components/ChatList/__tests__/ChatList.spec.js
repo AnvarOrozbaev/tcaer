@@ -9,9 +9,9 @@ import { mockStore, mockStateChats} from "../../../store/mockStore";
 it('matches snapshot ', () => {
     
     const component = render(
-      <Provider store={mockStore} >
+   
          <ChatList chats={[]}/>
-      </Provider>
+ 
     );
      expect(component).toMatchSnapshot();
     
